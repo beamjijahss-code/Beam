@@ -377,7 +377,6 @@
     window.onload = async function() {
       storeData.currentUser = localStorage.getItem('MY_CURRENT_USER');
       await loadFromStorage();
-      renderAll();
       loadBankSettingsToFrontend();
     };
 
@@ -411,6 +410,9 @@
       if(!storeData.users) storeData.users = [];
       if(!storeData.products) storeData.products = [];
       if(!storeData.banners) storeData.banners = [];
+      if(!storeData.cart) storeData.cart = [];
+
+      renderAll();
     }
     
     async function saveData() {
@@ -814,6 +816,7 @@
     function addToCart(id) {
       let p = storeData.products.find(item => item.id === id);
       if(p && p.stockList && p.stockList.length > 0) {
+        if(!storeData.cart) storeData.cart = [];
         storeData.cart.push(Object.assign({}, p));
         saveData();
         showPopup("สำเร็จ", `เพิ่ม "${p.name}" ลงตะกร้าแล้ว`);
